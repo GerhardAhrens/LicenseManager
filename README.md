@@ -1,4 +1,4 @@
-# License Manager
+ï»¿# License Manager
 
 ![NET](https://img.shields.io/badge/NET-10-green.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
@@ -6,10 +6,10 @@
 ![Version](https://img.shields.io/badge/Version-1.0.2026.0-yellow.svg)
 
 ## Projekt 
-Das Ursprüngliche Projekt wurde mal unter .Net Framework 3.0 erstellt. Das Beispiel soll zeigen, wie ein einfacher aber effektiver Lizent Manager erstell werden kann.
+Das UrsprÃ¼ngliche Projekt wurde mal unter .Net Framework 3.0 erstellt. Das Beispiel soll zeigen, wie ein einfacher aber effektiver Lizent Manager erstell werden kann.
 
 ## Hinweis
-Der Source ist soll auch einfache Art und Weise die Funktionen eines Features zeigen. Der Source ist so geschrieben, das so wenig wie möglich zusätzliche NuGet-Pakete benötigt werden.
+Der Source ist soll auch einfache Art und Weise die Funktionen eines Features zeigen. Der Source ist so geschrieben, das so wenig wie mÃ¶glich zusÃ¤tzliche NuGet-Pakete benÃ¶tigt werden.
 
 ## Features
 - Verwaltung/Erstellung von Trail Versionen
@@ -29,9 +29,9 @@ Erstellen des Private und Puplic Key (der Private Key darf nicht weitergegeben w
 ```csharp
 KeyGenerator.Create();
 ```
-Der Lizenz Key muß nur einmal pro Lizenz/Anwendung aufgerufen werden. Dieser darf sich nicht ändern, da sonst die `license.lic` nicht mehr passt.
+Der Lizenz Key muÃŸ nur einmal pro Lizenz/Anwendung aufgerufen werden. Dieser darf sich nicht Ã¤ndern, da sonst die `license.lic` nicht mehr passt.
 
-Lizenzdatei `license.lic` erstellen. Hierzu kann ein eigenes Programm erstellt werden, das die Erstellung und Verwaltung der Lizenz Informationen übernimmt.
+Lizenzdatei `license.lic` erstellen. Hierzu kann ein eigenes Programm erstellt werden, das die Erstellung und Verwaltung der Lizenz Informationen Ã¼bernimmt.
 ```csharp
 MachineId machineId = MachineIdProvider.GetMachineId();
 LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Enterprise, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
@@ -44,7 +44,7 @@ Features.LicenseManager.Initialize();
 Features.LicenseContext license = Features.LicenseManager.GetContext();
 ```
 
-In der Variabel `license`stehen alle Lizentinformation die über den `LicenseContext` für die Anwendung ermittelt wurden.
+In der Variabel `license`stehen alle Lizentinformation die Ã¼ber den `LicenseContext` fÃ¼r die Anwendung ermittelt wurden.
 
 Lizenzdatei `license.lic`
 
@@ -61,14 +61,34 @@ Lizenzdatei `license.lic`
   "Signature": "H38ieT2iikP08sqhTtwC7GPZK7Jto6HaE9yTZJ\u002BR2AF1E7WbMau/v5eT2WFH5AaclJuorUECXMZD4lw19H9CCKBY18VwMk2TJU7CU3rSYUYzUUrYsUf4Q45IRtUieVREwWqXa36qInPsTBfGTPVzRkisldYav/98iu9iQCL8vzwc73V1gatnN3HwtlctsZ31RQlM0ENkEkMoov343aQdWz6Ky/rz9gXyDDGbUjwfvrta/SO14oDPDSo\u002Bm80ZIhNraUkWqA13t0WITg72anAfNwP2clbPWoK0BEOyeOi8Vw8PYv0hA8bYHjd1g3quToUy8v0pfxI\u002BN0bJAe6R300Q0g=="
 }
 ```
+<br>
+
+## MÃ¶gliche Erweiterung
+Die vorgestellte LÃ¶sung ist eine Minimal LÃ¶sung. um aber gerade die Trail-Version noch weiter abzusichern, kann diese parallel noch in der Registry abgelegt werden.
+Datei vorhanden?\
+       â†“\
+Registry vorhanden?\
+       â†“\
+Werte identisch?\
+       â†“\
+Checksum gÃ¼ltig?\
+       â†“\
+Trial gÃ¼ltig
+
+Wenn Datei und Registry voneinander abweichen:\
+=> Manipulationsversuch
+<br>
+
+## zusÃ¤tzliche NuGet-Pakete
+In der Anwendung/Demo werden folgende zusÃ¤tzliche Pakete verwendet
 
 |NuGet-Paket|Lizenz|Beschreibung|
 |:------|:--|:-----------|
-|System.Security.Cryptography.ProtectedData|MIT|DPAPI (Data Protection API) ist eine Windows-Funktion, mit der Daten verschlüsselt werden können, ohne dass du selbst Schlüssel verwalten musst.|
+|System.Security.Cryptography.ProtectedData|MIT|DPAPI (Data Protection API) ist eine Windows-Funktion, mit der Daten verschlÃ¼sselt werden kÃ¶nnen, ohne dass du selbst SchlÃ¼ssel verwalten musst.|
 
 
 # Versionshistorie
 ![Version](https://img.shields.io/badge/Version-1.0.2026.1-yellow.svg)
 - Migration auf NET 10
-- DPAPI hinzugefügt (für Trail-Version)
-- Bildung einer Checksum gegen Manipulation (für Trail-Version)
+- DPAPI hinzugefÃ¼gt (fÃ¼r Trail-Version)
+- Bildung einer Checksum gegen Manipulation (fÃ¼r Trail-Version)
