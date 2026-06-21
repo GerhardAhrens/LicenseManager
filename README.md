@@ -62,6 +62,13 @@ Lizenzdatei `license.lic`
 }
 ```
 
+|NuGet-Paket|Lizenz|Beschreibung|
+|:------|:--|:-----------|
+|System.Security.Cryptography.ProtectedData|MIT|DPAPI (Data Protection API) ist eine Windows-Funktion, mit der Daten verschlüsselt werden können, ohne dass du selbst Schlüssel verwalten musst.|
+
+
 # Versionshistorie
-![Version](https://img.shields.io/badge/Version-1.0.2026.0-yellow.svg)
+![Version](https://img.shields.io/badge/Version-1.0.2026.1-yellow.svg)
 - Migration auf NET 10
+- DPAPI hinzugefügt (für Trail-Version)
+- Bildung einer Checksum gegen Manipulation (für Trail-Version)

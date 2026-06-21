@@ -17,6 +17,8 @@ namespace LicenseManager.Features
 {
     using System.Globalization;
     using System.Reflection;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Text.Json;
 
     public static class TrialManager
@@ -38,20 +40,27 @@ namespace LicenseManager.Features
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(TrialFile)!);
 
-                TrialInfo info = new()
+                TrialInfo infoNew = new()
                 {
                     FirstStartDate = DateTime.UtcNow,
                     TrialDays = TrialDays,
                     Features = LicenseFeature.All
                 };
 
-                Save(info);
+                Save(infoNew);
 
-                return info;
+                return infoNew;
             }
 
             string trailFileContent = ProtectedStorage.Load(TrialFile);
-            return JsonSerializer.Deserialize<TrialInfo>(trailFileContent) ?? throw new InvalidOperationException();
+            TrialInfo info = JsonSerializer.Deserialize<TrialInfo>(trailFileContent) ?? throw new InvalidOperationException();
+
+            if (info.Checksum != CreateChecksum(info))
+            {
+                throw new InvalidOperationException("Trial-Daten manipuliert.");
+            }
+
+            return info;
         }
 
         private static void Save(TrialInfo info)
@@ -62,9 +71,18 @@ namespace LicenseManager.Features
             };
 
             JsonSerializerOptions options = jsonSerializerOptions;
-
+            info.Checksum = CreateChecksum(info);
             string json = JsonSerializer.Serialize(info, options);
             ProtectedStorage.Save(TrialFile, json);
+        }
+
+        private static string CreateChecksum(TrialInfo info)
+        {
+            string value = $"{info.FirstStartDate:O}|{info.TrialDays}";
+
+            byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(value));
+
+            return Convert.ToHexString(hash);
         }
     }
 }
