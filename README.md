@@ -16,6 +16,8 @@ Der Source ist soll auch einfache Art und Weise die Funktionen eines Features ze
 - Features Verwaltung
 - Features Profile
 
+So entsteht ein robustes Features für eine Test- und/oder Lizenz Version, ohne einen Lizenzserver zu benötigen. Die eigentliche Lizenzdatei wird dabei durch die RSA-Signatur geschützt, während DPAPI die lokalen Trial-Daten vor Manipulation sichert.
+
 ## Screenshot
 
 <img src="TrailVersion.png" style="width:650px;"/>
