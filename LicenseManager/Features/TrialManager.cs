@@ -34,7 +34,7 @@ namespace LicenseManager.Features
 
         public static TrialInfo GetTrial()
         {
-            if (!File.Exists(TrialFile))
+            if (File.Exists(TrialFile) == false)
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(TrialFile)!);
 
@@ -50,7 +50,8 @@ namespace LicenseManager.Features
                 return info;
             }
 
-            return JsonSerializer.Deserialize<TrialInfo>(File.ReadAllText(TrialFile)) ?? throw new InvalidOperationException();
+            string trailFileContent = ProtectedStorage.Load(TrialFile);
+            return JsonSerializer.Deserialize<TrialInfo>(trailFileContent) ?? throw new InvalidOperationException();
         }
 
         private static void Save(TrialInfo info)
@@ -63,8 +64,7 @@ namespace LicenseManager.Features
             JsonSerializerOptions options = jsonSerializerOptions;
 
             string json = JsonSerializer.Serialize(info, options);
-
-            File.WriteAllText(TrialFile, json);
+            ProtectedStorage.Save(TrialFile, json);
         }
     }
 }

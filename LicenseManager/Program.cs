@@ -51,6 +51,7 @@ namespace LicenseManager
         private static void MenuPoint1()
         {
             Console.Clear();
+
             KeyGenerator.Create();
 
             Console.Wait();
@@ -82,8 +83,11 @@ namespace LicenseManager
         {
             Console.Clear();
 
-            MachineId machineId = MachineIdProvider.GetMachineId();
-            LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Basic, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+            if (File.Exists("license.lic") == false)
+            {
+                MachineId machineId = MachineIdProvider.GetMachineId();
+                LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Basic, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+            }
 
             Features.LicenseManager.Initialize();
             Features.LicenseContext license = Features.LicenseManager.GetContext();
@@ -101,8 +105,11 @@ namespace LicenseManager
         private static void MenuPoint4()
         {
             Console.Clear();
-            MachineId machineId = MachineIdProvider.GetMachineId();
-            LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Enterprise, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+            if (File.Exists("license.lic") == false)
+            {
+                MachineId machineId = MachineIdProvider.GetMachineId();
+                LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Enterprise, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+            }
 
             Features.LicenseManager.Initialize();
             Features.LicenseContext license = Features.LicenseManager.GetContext();

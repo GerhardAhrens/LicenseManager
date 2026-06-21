@@ -125,6 +125,7 @@ namespace LicenseManager.Features
                 Features = _license.Features,
                 IsLicensed = true,
                 SubscriptionValid = subscriptionValid,
+                SubscriptionId = _license.SubscriptionId,
                 State = subscriptionValid
                     ? LicenseState.Full
                     : LicenseState.SubscriptionExpired
