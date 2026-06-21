@@ -20,12 +20,13 @@ namespace LicenseManager.Features
     {
         public bool IsLicensed { get; init; }
         public bool SubscriptionValid { get; init; }
-        public string SubscriptionId { get; set; } = "";
+        public string SubscriptionId { get; set; }
         public LicenseState State { get; init; }
         public int RemainingTrialDays { get; init; }
-        public string Customer { get; init; } = "";
-        public string Product { get; init; } = "";
+        public string Customer { get; init; }
+        public string Product { get; init; }
         public DateTime ExpiryDate { get; init; }
+        public string Path { get; init; }
         public LicenseFeature Features { get; init; }
         public bool HasFeature(LicenseFeature feature)
         {

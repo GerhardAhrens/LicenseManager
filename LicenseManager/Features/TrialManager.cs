@@ -44,7 +44,8 @@ namespace LicenseManager.Features
                 {
                     FirstStartDate = DateTime.UtcNow,
                     TrialDays = TrialDays,
-                    Features = LicenseFeature.All
+                    Features = LicenseFeature.All,
+                    Path = TrialFile
                 };
 
                 Save(infoNew);

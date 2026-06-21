@@ -23,6 +23,7 @@ namespace LicenseManager.Features
         public bool IsExpired => DateTime.UtcNow > FirstStartDate.AddDays(TrialDays);
         public LicenseFeature Features { get; set; }
         public string Checksum { get; set; }
+        public string Path { get; set; }
 
         public int RemainingDays
         {

@@ -15,6 +15,7 @@
 
 namespace LicenseManager.Features
 {
+    using System.Reflection;
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.Json;
@@ -91,7 +92,8 @@ namespace LicenseManager.Features
                     IsLicensed = false,
                     ExpiryDate = trial.ExpiryDate,
                     Features = trial.Features,
-                    SubscriptionValid = false
+                    SubscriptionValid = false,
+                    Path = trial.Path,
                 };
             }
 
@@ -116,6 +118,7 @@ namespace LicenseManager.Features
             }
 
             bool subscriptionValid = _license.ExpiryDate >= DateTime.UtcNow;
+            string licPath = Path.Combine(Assembly.GetExecutingAssembly().Location, LicenseFile);
 
             return new LicenseContext
             {
@@ -126,6 +129,7 @@ namespace LicenseManager.Features
                 IsLicensed = true,
                 SubscriptionValid = subscriptionValid,
                 SubscriptionId = _license.SubscriptionId,
+                Path = licPath,
                 State = subscriptionValid
                     ? LicenseState.Full
                     : LicenseState.SubscriptionExpired
