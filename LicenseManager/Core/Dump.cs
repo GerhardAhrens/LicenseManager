@@ -6,9 +6,9 @@
 
     public static class Dump
     {
-        public static List<(string Name, Type Type, object? Value)> Get(object? instance)
+        public static List<(string Name, Type Type, object Value)> Get(object instance)
         {
-            var result = new List<(string Name, Type Type, object? Value)>();
+            var result = new List<(string Name, Type Type, object Value)>();
 
             if (instance == null)
                 return result;

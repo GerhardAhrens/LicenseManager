@@ -11,6 +11,17 @@ Das Ursprüngliche Projekt wurde mal unter .Net Framework 3.0 erstellt. Das Beisp
 ## Hinweis
 Der Source ist soll auch einfache Art und Weise die Funktionen eines Features zeigen. Der Source ist so geschrieben, das so wenig wie möglich zusätzliche NuGet-Pakete benötigt werden.
 
+## Features
+- Verwaltung/Erstellung von Trail Versionen
+- Features Verwaltung
+- Features Profile
+
+## Screenshot
+
+<img src="TrailVersion.png" style="width:650px;"/>
+
+<img src="BasicVersion.png" style="width:650px;"/>
+
 ## Beispielsource
 
 > Beschreibung

@@ -9,7 +9,7 @@
 // <date>21.06.2026</date>
 //
 // <summary>
-// Lesen und verivizieren einer Lizenzdatei license.lic
+// Lesen und verifizieren einer Lizenzdatei license.lic
 // </summary>
 //-----------------------------------------------------------------------
 
@@ -82,10 +82,15 @@ namespace LicenseManager.Features
         {
             if (_license == null)
             {
+                TrialInfo trial = TrialManager.GetTrial();
+
                 return new LicenseContext
                 {
-                    State = LicenseState.Trial,
+                    State = trial.IsExpired ? LicenseState.TrialExpired : LicenseState.Trial,
+                    RemainingTrialDays = trial.RemainingDays,
                     IsLicensed = false,
+                    ExpiryDate = trial.ExpiryDate,
+                    Features = trial.Features,
                     SubscriptionValid = false
                 };
             }
@@ -115,17 +120,11 @@ namespace LicenseManager.Features
             return new LicenseContext
             {
                 Customer = _license.Customer,
-
                 Product = _license.Product,
-
                 ExpiryDate = _license.ExpiryDate,
-
                 Features = _license.Features,
-
                 IsLicensed = true,
-
                 SubscriptionValid = subscriptionValid,
-
                 State = subscriptionValid
                     ? LicenseState.Full
                     : LicenseState.SubscriptionExpired

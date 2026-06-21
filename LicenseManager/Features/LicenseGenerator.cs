@@ -45,27 +45,21 @@ namespace LicenseManager.Features
 
             using RSA rsa = RSA.Create();
 
-            rsa.ImportFromPem(
-                File.ReadAllText(privateKeyFile));
+            rsa.ImportFromPem(File.ReadAllText(privateKeyFile));
 
-            byte[] signature =
-                rsa.SignData(
-                    Encoding.UTF8.GetBytes(dataToSign),
-                    HashAlgorithmName.SHA256,
-                    RSASignaturePadding.Pkcs1);
+            byte[] signature = rsa.SignData(Encoding.UTF8.GetBytes(dataToSign), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
-            license.Signature =
-                Convert.ToBase64String(signature);
+            license.Signature =  Convert.ToBase64String(signature);
 
-            JsonSerializerOptions options = new()
+
+            JsonSerializerOptions jsonSerializerOptions = new()
             {
                 WriteIndented = true
             };
 
-            string json =
-                JsonSerializer.Serialize(
-                    license,
-                    options);
+            JsonSerializerOptions options = jsonSerializerOptions;
+
+            string json = JsonSerializer.Serialize(license, options: options);
 
             File.WriteAllText(outputFile, json);
         }

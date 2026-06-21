@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="LicenseInfo.cs" company="Lifeprojects.de">
+// <copyright file="LicenseState.cs" company="Lifeprojects.de">
 //     Class: LicenseInfo
 //     Copyright © Lifeprojects.de 2026
 // </copyright>
@@ -18,8 +18,13 @@ namespace LicenseManager.Features
     public enum LicenseState
     {
         Trial,
-        SubscriptionExpired,
+
+        TrialExpired,
+
         InvalidLicense,
+
+        SubscriptionExpired,
+
         Full
     }
 }

@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
-// <copyright file="LicenseInfo.cs" company="Lifeprojects.de">
-//     Class: LicenseInfo
+// <copyright file="TrialManager.cs" company="Lifeprojects.de">
+//     Class: TrialManager
 //     Copyright © Lifeprojects.de 2026
 // </copyright>
 //
@@ -9,57 +9,62 @@
 // <date>21.06.2026</date>
 //
 // <summary>
-// Beinhaltet die Lizenzinformationen
+// Beinhaltet die Verwaltung einer Trail Version
 // </summary>
 //-----------------------------------------------------------------------
 
 namespace LicenseManager.Features
 {
     using System.Globalization;
+    using System.Reflection;
+    using System.Text.Json;
 
     public static class TrialManager
     {
-        private static readonly string TrialFile =
-            Path.Combine(
-                Environment.GetFolderPath(
-                    Environment.SpecialFolder.LocalApplicationData),
-                "MyApplication.trial");
+        private static readonly string TrialFile;
 
-        public static bool IsTrialValid()
+        private const int TrialDays = 30;
+
+        static TrialManager()
         {
-            DateTime startDate;
+            var rootNamespace = Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
 
-            if (!File.Exists(TrialFile))
-            {
-                startDate = DateTime.Now;
-
-                File.WriteAllText(
-                    TrialFile,
-                    startDate.ToString("O"));
-            }
-            else
-            {
-                startDate =
-                    DateTime.Parse(
-                        File.ReadAllText(TrialFile));
-            }
-
-            return DateTime.Now <
-                   startDate.AddDays(30);
+            TrialFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), rootNamespace, "trial.dat");
         }
 
-        public static int RemainingDays()
+        public static TrialInfo GetTrial()
         {
             if (!File.Exists(TrialFile))
-                return 30;
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(TrialFile)!);
 
-            DateTime startDate =
-                DateTime.Parse(
-                    File.ReadAllText(TrialFile),CultureInfo.CurrentCulture);
+                TrialInfo info = new()
+                {
+                    FirstStartDate = DateTime.UtcNow,
+                    TrialDays = TrialDays,
+                    Features = LicenseFeature.All
+                };
 
-            return Math.Max(
-                0,
-                (int)(startDate.AddDays(30) - DateTime.Now).TotalDays);
+                Save(info);
+
+                return info;
+            }
+
+            return JsonSerializer.Deserialize<TrialInfo>(File.ReadAllText(TrialFile)) ?? throw new InvalidOperationException();
+        }
+
+        private static void Save(TrialInfo info)
+        {
+            JsonSerializerOptions jsonSerializerOptions = new()
+            {
+                WriteIndented = true
+            };
+
+            JsonSerializerOptions options = jsonSerializerOptions;
+
+            string json = JsonSerializer.Serialize(info, options);
+
+            File.WriteAllText(TrialFile, json);
         }
     }
 }

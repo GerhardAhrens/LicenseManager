@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
-// <copyright file="LicenseInfo.cs" company="Lifeprojects.de">
-//     Class: LicenseInfo
+// <copyright file="KeyGenerator.cs" company="Lifeprojects.de">
+//     Class: KeyGenerator
 //     Copyright © Lifeprojects.de 2026
 // </copyright>
 //

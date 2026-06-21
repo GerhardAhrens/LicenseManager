@@ -75,6 +75,11 @@ namespace System
                 Console.ForegroundColor = defaultColor;
                 Console.CursorVisible = defaultCursor;
             }
+
+            public static List<(string Name, Type Type, object Value)> ToDump(object instance)
+            {
+                return Dump.Get(instance);
+            }
         }
     }
 }

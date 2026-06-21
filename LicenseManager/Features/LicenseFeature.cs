@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
-// <copyright file="LicenseInfo.cs" company="Lifeprojects.de">
-//     Class: LicenseInfo
+// <copyright file="LicenseFeature.cs" company="Lifeprojects.de">
+//     Class: LicenseFeature
 //     Copyright © Lifeprojects.de 2026
 // </copyright>
 //
@@ -9,7 +9,7 @@
 // <date>21.06.2026</date>
 //
 // <summary>
-// Beinhaltet die Lizenzinformationen
+// Beinhaltet die Features Informationen zu einer Lizenz
 // </summary>
 //-----------------------------------------------------------------------
 

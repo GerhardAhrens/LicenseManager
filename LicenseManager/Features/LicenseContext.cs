@@ -1,6 +1,6 @@
 //-----------------------------------------------------------------------
-// <copyright file="LicenseInfo.cs" company="Lifeprojects.de">
-//     Class: LicenseInfo
+// <copyright file="LicenseContext.cs" company="Lifeprojects.de">
+//     Class: LicenseContext
 //     Copyright © Lifeprojects.de 2026
 // </copyright>
 //
@@ -23,6 +23,8 @@ namespace LicenseManager.Features
         public bool SubscriptionValid { get; init; }
 
         public LicenseState State { get; init; }
+
+        public int RemainingTrialDays { get; init; }
 
         public string Customer { get; init; } = "";
 

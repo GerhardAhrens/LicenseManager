@@ -36,8 +36,9 @@ namespace LicenseManager
         {
             CMenu mainMenu = new CMenu("Lizenzverwaltung");
             mainMenu.AddItem("Erstelle LizenzKey", MenuPoint1);
-            mainMenu.AddItem("Erstelle und prüfen Lizenzdatei BASIC", MenuPoint2);
-            mainMenu.AddItem("Erstelle und prüfen Lizenzdatei ENTERPRISE", MenuPoint3);
+            mainMenu.AddItem("Erstelle und prüfen Lizenzdatei TRAIL", MenuPoint2);
+            mainMenu.AddItem("Erstelle und prüfen Lizenzdatei BASIC", MenuPoint3);
+            mainMenu.AddItem("Erstelle und prüfen Lizenzdatei ENTERPRISE", MenuPoint4);
             mainMenu.AddItem("Beenden", () => ApplicationExit());
             mainMenu.Show();
         }
@@ -59,13 +60,15 @@ namespace LicenseManager
         {
             Console.Clear();
 
-            MachineId machineId = MachineIdProvider.GetMachineId();
-            LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Basic, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+            if (File.Exists("license.lic") == true)
+            {
+                File.Delete("license.lic");
+            }
 
             Features.LicenseManager.Initialize();
             Features.LicenseContext license = Features.LicenseManager.GetContext();
 
-            var resultDump = Dump.Get(license);
+            var resultDump = Console.ToDump(license);
 
             foreach (var (name, type, value) in resultDump)
             {
@@ -78,13 +81,33 @@ namespace LicenseManager
         private static void MenuPoint3()
         {
             Console.Clear();
+
+            MachineId machineId = MachineIdProvider.GetMachineId();
+            LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Basic, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
+
+            Features.LicenseManager.Initialize();
+            Features.LicenseContext license = Features.LicenseManager.GetContext();
+
+            var resultDump = Console.ToDump(license);
+
+            foreach (var (name, type, value) in resultDump)
+            {
+                Console.WriteText($"{name} [{type.Name}] = {value}");
+            }
+
+            Console.Wait();
+        }
+
+        private static void MenuPoint4()
+        {
+            Console.Clear();
             MachineId machineId = MachineIdProvider.GetMachineId();
             LicenseGenerator.Generate("Muster GmbH", "ERP", machineId, expiryDate: DateTime.Now.AddYears(1), LicenseProfiles.Enterprise, subscriptionId: "SUB-2026-0001", privateKeyFile: "private.key", outputFile: "license.lic");
 
             Features.LicenseManager.Initialize();
             Features.LicenseContext license = Features.LicenseManager.GetContext();
 
-            var resultDump = Dump.Get(license);
+            var resultDump = Console.ToDump(license);
 
             foreach (var (name, type, value) in resultDump)
             {
